@@ -16,8 +16,8 @@ RUN apk add --no-cache \
     make \
     ncurses-dev \
     bash \
-    python \
-    python-dev
+    python3 \
+    python3-dev
 
 # Build vim
 RUN git clone --depth 1 https://github.com/vim/vim \
@@ -27,7 +27,7 @@ RUN git clone --depth 1 https://github.com/vim/vim \
     --disable-netbeans \
     --enable-terminal \
     --enable-multibyte \
-    --enable-pythoninterp \
+    --enable-python3interp \
     --with-features=big \
     --with-python-config-dir=/usr/lib/python2.7/config \
  && make install
@@ -43,6 +43,7 @@ RUN git clone --depth 1 https://github.com/ryoo14/dotfiles.git /root/dotfiles \
  && cd /root \
  && ln -s dotfiles/.vimrc .vimrc \
  && ln -s dotfiles/.vim .vim \
+ && ln -s dotfiles/.gemrc .gemrc \
  && ln -fs dotfiles/.bashrc .bashrc \
  && ln -fs dotfiles/.fzf.bash .fzf.bash \
  && ln -s dotfiles/.ctags .ctags
@@ -91,17 +92,21 @@ RUN apk update && apk upgrade \
     openssl-dev \
     procps \
     readline-dev \
+    ruby-dev \
     the_silver_searcher \
     yaml-dev \
     zlib-dev \
     go \
     ruby \
  && git clone https://github.com/Shougo/dein.vim.git $HOME/.cache/dein/repos/github.com/Shougo/dein.vim \
- && vim -s /root/dein_script
+ && vim -s /root/dein_script \
+ && gem install bundler \ 
+ && gem install solargraph \
+ && go get -u golang.org/x/tools/cmd/gopls
 ## ruby
 # && git clone --depth 1 https://github.com/rbenv/rbenv.git ~/.rbenv \
 # && git clone --depth 1 https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build \
 # && $HOME/.rbenv/bin/rbenv install $RUBY_VERSION \
 # && $HOME/.rbenv/bin/rbenv global $RUBY_VERSION
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["vim"]
