@@ -56,8 +56,8 @@ COPY --from=builder /usr/local/share/vim/ /usr/local/share/vim/
 COPY --from=builder /root /root
 COPY dein_script /root
 
-ENV RUBY_VERSION 2.6.5
-ENV GO_VERSION 1.13.4
+# ENV RUBY_VERSION 2.6.5
+# ENV GO_VERSION 1.13.4
 
 RUN apk update && apk upgrade \ 
 # vim
@@ -100,13 +100,17 @@ RUN apk update && apk upgrade \
     ruby \
  && git clone https://github.com/Shougo/dein.vim.git $HOME/.cache/dein/repos/github.com/Shougo/dein.vim \
  && vim -s /root/dein_script \
- && gem install bundler \ 
- && gem install solargraph \
+# vim-lsp(Ruby)
+ && gem install bundler solargraph json etc \ 
+ && apk add ruby-irb \
+# vim-lsp(Go)
  && go get -u golang.org/x/tools/cmd/gopls
 ## ruby
 # && git clone --depth 1 https://github.com/rbenv/rbenv.git ~/.rbenv \
 # && git clone --depth 1 https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build \
 # && $HOME/.rbenv/bin/rbenv install $RUBY_VERSION \
 # && $HOME/.rbenv/bin/rbenv global $RUBY_VERSION
+
+ENV PATH /root/go/bin:$PATH
 
 ENTRYPOINT ["vim"]
