@@ -104,7 +104,7 @@ RUN apk update && apk upgrade \
  && gem install bundler solargraph json etc \ 
  && apk add ruby-irb \
 # vim-lsp(Go)
- && go get -u golang.org/x/tools/cmd/gopls
+ && GO111MODULE=on go get golang.org/x/tools/gopls@latest
 ## ruby
 # && git clone --depth 1 https://github.com/rbenv/rbenv.git ~/.rbenv \
 # && git clone --depth 1 https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build \
