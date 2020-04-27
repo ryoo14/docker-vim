@@ -98,8 +98,7 @@ RUN apk update && apk upgrade \
     zlib-dev \
     go \
     ruby \
- && git clone https://github.com/Shougo/dein.vim.git $HOME/.cache/dein/repos/github.com/Shougo/dein.vim \
- && vim -s /root/dein_script \
+ && vim -s /root/plug_script \
 # vim-lsp(Ruby)
  && gem install bundler solargraph json etc \ 
  && apk add ruby-irb \
