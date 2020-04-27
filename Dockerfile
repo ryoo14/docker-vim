@@ -54,7 +54,7 @@ FROM alpine:latest
 COPY --from=builder /usr/local/bin/ /usr/local/bin
 COPY --from=builder /usr/local/share/vim/ /usr/local/share/vim/
 COPY --from=builder /root /root
-COPY dein_script /root
+COPY plug_script /root
 
 # ENV RUBY_VERSION 2.6.5
 # ENV GO_VERSION 1.13.4
