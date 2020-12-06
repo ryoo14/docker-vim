@@ -29,7 +29,7 @@ RUN git clone --depth 1 https://github.com/vim/vim \
     --enable-multibyte \
     --enable-python3interp \
     --with-features=big \
-    --with-python-config-dir=/usr/lib/python2.7/config \
+#    --with-python-config-dir=/usr/lib/python2.7/config \
  && make install
  
 # Build fzf
@@ -61,7 +61,7 @@ COPY plug_script /root
 
 RUN apk update && apk upgrade \ 
 # vim
- && apk add --no-cache \
+ && apk --update add \
     autoconf \
     bash \
     bison \
@@ -96,20 +96,26 @@ RUN apk update && apk upgrade \
     the_silver_searcher \
     yaml-dev \
     zlib-dev \
-    go \
     ruby \
- && vim -s /root/plug_script \
 # vim-lsp(Ruby)
  && gem install bundler solargraph json etc \ 
  && apk add ruby-irb \
-# vim-lsp(Go)
- && GO111MODULE=on go get golang.org/x/tools/gopls@latest
+# Rust
+ && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
+ && export PATH=/root/.cargo/bin:$PATH \
+ && rustup update \
+ && rustup component add rls rust-analysis rust-src \
+# Vim
+ && mkdir /root/.vim/plugged \
+ && cd /root/.vim/plugged \
+ && git clone --depth 1 https://github.com/ryoo14/coral.vim \
+ && vim -c PlugInstall -c q -c q
 ## ruby
 # && git clone --depth 1 https://github.com/rbenv/rbenv.git ~/.rbenv \
 # && git clone --depth 1 https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build \
 # && $HOME/.rbenv/bin/rbenv install $RUBY_VERSION \
 # && $HOME/.rbenv/bin/rbenv global $RUBY_VERSION
 
-ENV PATH /root/go/bin:$PATH
+ENV PATH /root/.cargo/bin:$PATH
 
 ENTRYPOINT ["vim"]
