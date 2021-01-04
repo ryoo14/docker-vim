@@ -54,7 +54,6 @@ FROM alpine:latest
 COPY --from=builder /usr/local/bin/ /usr/local/bin
 COPY --from=builder /usr/local/share/vim/ /usr/local/share/vim/
 COPY --from=builder /root /root
-COPY plug_script /root
 
 # ENV RUBY_VERSION 2.6.5
 # ENV GO_VERSION 1.13.4
@@ -106,8 +105,8 @@ RUN apk update && apk upgrade \
  && rustup update \
  && rustup component add rls rust-analysis rust-src \
 # Vim
- && mkdir /root/.vim/plugged \
- && cd /root/.vim/plugged \
+ && mkdir -p /root/.vim/plug/plugins \
+ && cd /root/.vim/plug/plugins \
  && git clone --depth 1 https://github.com/ryoo14/coral.vim \
  && vim -c PlugInstall -c q -c q
 ## ruby
