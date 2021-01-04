@@ -107,7 +107,7 @@ RUN apk update && apk upgrade \
 # Vim
  && mkdir -p /root/.vim/plug/plugins \
  && cd /root/.vim/plug/plugins \
- && git clone --depth 1 https://github.com/ryoo14/coral.vim \
+ && git clone --depth 1 https://github.com/ghifarit53/tokyonight-vim \
  && vim -c PlugInstall -c q -c q
 ## ruby
 # && git clone --depth 1 https://github.com/rbenv/rbenv.git ~/.rbenv \
