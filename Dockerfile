@@ -59,8 +59,7 @@ COPY --from=builder /root /root
 # ENV GO_VERSION 1.13.4
 
 RUN apk update && apk upgrade \ 
-# vim
- && apk --update add \
+ && apk add --no-cache \
     autoconf \
     bash \
     bison \
@@ -96,7 +95,7 @@ RUN apk update && apk upgrade \
     yaml-dev \
     zlib-dev \
     ruby \
-# vim-lsp(Ruby)
+# Ruby
  && gem install bundler solargraph json etc \ 
  && apk add ruby-irb \
 # Rust
