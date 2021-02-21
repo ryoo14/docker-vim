@@ -20,7 +20,8 @@ RUN apk add --no-cache \
     python3-dev
 
 # Build vim
-RUN git clone --depth 1 https://github.com/vim/vim \
+RUN echo 'nameserver 8.8.8.8' > /etc/resolv.conf \
+ && git clone --depth 1 https://github.com/vim/vim \
  && cd vim \
  && ./configure \
     --disable-gui \
@@ -29,17 +30,18 @@ RUN git clone --depth 1 https://github.com/vim/vim \
     --enable-multibyte \
     --enable-python3interp \
     --with-features=big \
-#    --with-python-config-dir=/usr/lib/python2.7/config \
  && make install
  
 # Build fzf
-RUN git clone --depth 1 https://github.com/junegunn/fzf.git /root/.fzf \
+RUN echo 'nameserver 8.8.8.8' > /etc/resolv.conf \
+ && git clone --depth 1 https://github.com/junegunn/fzf.git /root/.fzf \
  && bash \
  && cd /root/.fzf \
  && ./install --all
 
 # Install dotfiles
-RUN git clone --depth 1 https://github.com/ryoo14/dotfiles.git /root/dotfiles \
+RUN echo 'nameserver 8.8.8.8' > /etc/resolv.conf \
+ && git clone --depth 1 https://github.com/ryoo14/dotfiles.git /root/dotfiles \
  && cd /root \
  && ln -s dotfiles/.vimrc .vimrc \
  && ln -s dotfiles/.vim .vim \
@@ -97,7 +99,7 @@ RUN apk update && apk upgrade \
     ruby \
 # Ruby
  && gem install bundler solargraph json etc \ 
- && apk add ruby-irb \
+ && apk add --no-cache ruby-irb \
 # Rust
  && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
  && export PATH=/root/.cargo/bin:$PATH \
@@ -106,7 +108,7 @@ RUN apk update && apk upgrade \
 # Vim
  && mkdir -p /root/.vim/plug/plugins \
  && cd /root/.vim/plug/plugins \
- && git clone --depth 1 https://github.com/ryoo14/coral.vim \
+ && echo 'nameserver 8.8.8.8' > /etc/resolv.conf && git clone --depth 1 https://github.com/ryoo14/coral.vim \
  && vim -c PlugInstall -c q -c q
 ## ruby
 # && git clone --depth 1 https://github.com/rbenv/rbenv.git ~/.rbenv \
